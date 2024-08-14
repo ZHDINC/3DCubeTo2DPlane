@@ -54,40 +54,42 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 	switch (msg)
 	{
 	case WM_KEYDOWN:
+	{
+		bool somethingChanged = false;
 		switch (wparam)
 		{
 		case 'A':
 			camera.x -= 1;
-			GetClientRect(hwnd, &rect);
-			InvalidateRect(hwnd, &rect, TRUE);
+			somethingChanged = true;
 			break;
 		case 'D':
 			camera.x += 1;
-			GetClientRect(hwnd, &rect);
-			InvalidateRect(hwnd, &rect, TRUE);
+			somethingChanged = true;
 			break;
 		case 'W':
 			camera.y -= 1;
-			GetClientRect(hwnd, &rect);
-			InvalidateRect(hwnd, &rect, TRUE);
+			somethingChanged = true;
 			break;
 		case 'S':
 			camera.y += 1;
-			GetClientRect(hwnd, &rect);
-			InvalidateRect(hwnd, &rect, TRUE);
+			somethingChanged = true;
 			break;
 		case VK_LEFT:
 			scalingfactor -= 1;
-			GetClientRect(hwnd, &rect);
-			InvalidateRect(hwnd, &rect, TRUE);
+			somethingChanged = true;
 			break;
 		case VK_RIGHT:
 			scalingfactor += 1;
-			GetClientRect(hwnd, &rect);
-			InvalidateRect(hwnd, &rect, TRUE);
+			somethingChanged = true;
 			break;
 		}
+		if (somethingChanged)
+		{
+			GetClientRect(hwnd, &rect);
+			InvalidateRect(hwnd, &rect, TRUE);
+		}
 		return 0;
+	}
 	case WM_PAINT:
 		hdc = BeginPaint(hwnd, &ps);
 		p1 = PointCalculator(points[0], camera, scalingfactor);
